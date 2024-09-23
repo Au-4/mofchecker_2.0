@@ -35,7 +35,6 @@ class Negative_charge_Check(BaseCoordinationCheck):
 
     def _run_check(self):
         number = self._get_halogen() + self._get_O_charge() + self._get_S_charge() + self._get_N_charge()
-     #   print(len(self._get_halogen()), len(self._get_O_charge()), len(self._get_N_charge()))
         return len(number) == 0, number
 
     def _get_halogen(self):
