@@ -23,7 +23,8 @@ setup(
         "structuregraph_helpers",
         "element_coder",
         "typing_extensions",
-        "libconeangle"
+        "libconeangle",
+        "psutil"
     ],
     entry_points={
         "console_scripts": [
