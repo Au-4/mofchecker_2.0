@@ -5,7 +5,7 @@ import warnings
 import numpy as np
 from collections import OrderedDict
 from pathlib import Path
-from typing import Iterable, List, Union
+from typing import Iterable, List, Union, Optional
 from scipy.spatial.transform import Rotation as R
 import psutil
 import sys
@@ -99,7 +99,7 @@ DESCRIPTORS = [
     "adding_linker",
     "possible_charged_fused_ring",
     "is_porous",
-    "has_suspicicious_terminal_oxo",
+    "has_suspicious_terminal_oxo",
     "has_undercoordinated_alkali_alkaline",
     "has_geometrically_exposed_metal",
     "has_3d_connected_graph",
@@ -511,12 +511,12 @@ class MOFChecker:
 #        return self.checks["metal_oxi"]
 
     @property
-    def has_suspicicious_terminal_oxo(self) -> bool:
+    def has_suspicious_terminal_oxo(self) -> bool:
         """Flag metals with a potentially wrong terminal oxo group."""
         return not self.checks["no_false_terminal_oxo"].is_ok
 
     @property
-    def suspicicious_terminal_oxo_indices(self) -> List[int]:
+    def suspicious_terminal_oxo_indices(self) -> List[int]:
         """Return indices of metals with a potentially wrong terminal oxo group."""
         return self.checks["no_false_terminal_oxo"].flagged_indices
 
