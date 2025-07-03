@@ -784,12 +784,13 @@ class MOFChecker:
 
     @classmethod
     def from_ase(
-        cls, atoms: Atoms, symprec: float = 0.5, angle_tolerance: float = 5, primitive: bool = True
+        cls, atoms: Atoms, linker_atoms: Optional[Atoms] = None, symprec: float = 0.5, angle_tolerance: float = 5, primitive: bool = True
     ) -> "MOFChecker":
         """Create a MOFChecker instance from an ASE atoms object.
 
         Args:
             atoms (Atoms): ase atoms object
+            linker_atoms (Atoms): ase atoms object for linker
             symprec (float): Symmetry tolerance
             angle_tolerance (float): Angle tolerance
             primitive (bool): Whether to use primitive cell
@@ -799,8 +800,11 @@ class MOFChecker:
         """
         adaptor = AseAtomsAdaptor()
         structure = adaptor.get_structure(atoms)
+        linker_structure = None
+        if linker_atoms is not None:
+            linker_structure = adaptor.get_structure(linker_atoms)
         omscls = cls(
-            structure, symprec=symprec, angle_tolerance=angle_tolerance, primitive=primitive
+            structure, linker_structure, symprec=symprec, angle_tolerance=angle_tolerance, primitive=primitive
         )
         return omscls
 
