@@ -5,7 +5,7 @@ import warnings
 import numpy as np
 from collections import OrderedDict
 from pathlib import Path
-from typing import Iterable, List, Union
+from typing import Iterable, List, Union, Optional
 from scipy.spatial.transform import Rotation as R
 import psutil
 import sys
@@ -99,7 +99,7 @@ DESCRIPTORS = [
     "adding_linker",
     "possible_charged_fused_ring",
     "is_porous",
-    "has_suspicicious_terminal_oxo",
+    "has_suspicious_terminal_oxo",
     "has_undercoordinated_alkali_alkaline",
     "has_geometrically_exposed_metal",
     "has_3d_connected_graph",
@@ -511,12 +511,12 @@ class MOFChecker:
 #        return self.checks["metal_oxi"]
 
     @property
-    def has_suspicicious_terminal_oxo(self) -> bool:
+    def has_suspicious_terminal_oxo(self) -> bool:
         """Flag metals with a potentially wrong terminal oxo group."""
         return not self.checks["no_false_terminal_oxo"].is_ok
 
     @property
-    def suspicicious_terminal_oxo_indices(self) -> List[int]:
+    def suspicious_terminal_oxo_indices(self) -> List[int]:
         """Return indices of metals with a potentially wrong terminal oxo group."""
         return self.checks["no_false_terminal_oxo"].flagged_indices
 
@@ -784,12 +784,13 @@ class MOFChecker:
 
     @classmethod
     def from_ase(
-        cls, atoms: Atoms, symprec: float = 0.5, angle_tolerance: float = 5, primitive: bool = True
+        cls, atoms: Atoms, linker_atoms: Optional[Atoms] = None, symprec: float = 0.5, angle_tolerance: float = 5, primitive: bool = True
     ) -> "MOFChecker":
         """Create a MOFChecker instance from an ASE atoms object.
 
         Args:
             atoms (Atoms): ase atoms object
+            linker_atoms (Atoms): ase atoms object for linker
             symprec (float): Symmetry tolerance
             angle_tolerance (float): Angle tolerance
             primitive (bool): Whether to use primitive cell
@@ -799,8 +800,11 @@ class MOFChecker:
         """
         adaptor = AseAtomsAdaptor()
         structure = adaptor.get_structure(atoms)
+        linker_structure = None
+        if linker_atoms is not None:
+            linker_structure = adaptor.get_structure(linker_atoms)
         omscls = cls(
-            structure, symprec=symprec, angle_tolerance=angle_tolerance, primitive=primitive
+            structure, linker_structure, symprec=symprec, angle_tolerance=angle_tolerance, primitive=primitive
         )
         return omscls
 
