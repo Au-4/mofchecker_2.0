@@ -14,7 +14,6 @@ setup(
     packages=find_packages(where="src"),
     package_dir={"": "src"},
     install_requires=[
-        "pyeqeq",
         "click",
         "networkx>=2.5",
         "backports.cached-property",
@@ -26,6 +25,11 @@ setup(
         "libconeangle",
         "psutil"
     ],
+    extras_require={
+        "pyeqeq": [
+            "pyeqeq"
+        ]
+    },
     entry_points={
         "console_scripts": [
             "mofchecker=mofchecker.cli:run",
