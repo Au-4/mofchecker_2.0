@@ -8,7 +8,17 @@ Development version:
 pip install git+https://github.com/Au-4/mofchecker_2.0
 ```
 
-Note that you need to install [zeopp](https://anaconda.org/conda-forge/zeopp-lsmo) if you want to use the porosity features.
+### Optional Dependencies
+
+**For charge checking features:**
+To enable the `no_high_charges` computation, install with the optional `pyeqeq` package:
+
+```bash
+pip install "mofchecker[pyeqeq] @ git+https://github.com/Au-4/mofchecker_2.0.git"
+```
+
+**For porosity analysis:**
+To use porosity features, install [zeopp](https://anaconda.org/conda-forge/zeopp-lsmo):
 
 ```bash
 conda install -c conda-forge zeopp-lsmo
