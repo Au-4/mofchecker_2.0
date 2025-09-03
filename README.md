@@ -2,7 +2,7 @@ MOFChecker is an algorithm designed for MOF structure curation. It includes dupl
 
 1.Installation
 
-Development version:
+Development version( we strongly recommend build in <= python 3.9 environment):
 
 ```bash
 pip install git+https://github.com/Au-4/mofchecker_2.0
